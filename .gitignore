@@ -7,3 +7,5 @@
 /Features/Calculator.feature
 /Features/Calculator.feature.cs
 /StepDefinitions/CalculatorStepDefinitions.cs
+/Helpers/Webdriverexample.txt
+/UnitTest1.cs
