@@ -1,14 +1,15 @@
 ﻿Feature: PayeesFunctionality
 
-A short summary of the feature
+This validates the Payees page functionality
 
-@tag1
+@Smoke @Regression @Payee
 Scenario: Verify navigation to Payees page using the navigation menu
-Given I am on the BNZ demo application home page
-When I click on the 'Menu' option
-And I click on the 'Payees' option in the navigation menu
-Then the Payees page should be loaded successfully.
+	Given I am on the BNZ demo application home page
+	When I click on the 'Menu' option
+	And I click on the 'Payees' option in the navigation menu
+	Then the Payees page should be loaded successfully
 
+@Smoke @Regression @Payee
 Scenario: Verify you can add new payee in the Payees page
 Given I am on the Payees page
 When I click the 'Add' button
@@ -17,6 +18,7 @@ And I click the 'Add' button on the model
 Then I should see the message 'Payee added'
 And the payee should be added to the list of payees
 
+@Smoke @Regression @Payee
 Scenario: Verify payee name is a required field
 Given I am on the Payees page
 When I click the 'Add' button
@@ -25,12 +27,11 @@ Then I should see validation errors
 When I populate the mandatory fields
 Then the validation errors should disappear
 
+@Smoke @Regression @Payee
 Scenario: Verify that payees can be sorted by name
 Given I am on the Payees page
 And there are existing payees in the list
 When the user adds a new payee
 Then the payee list should be sorted in ascending order by default
 And the user clicks the Name header
-Then the payee list should be sorted in alphabetical order by name.
-
-
+Then the payee list should be sorted in alphabetical order by name

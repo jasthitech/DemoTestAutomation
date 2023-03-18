@@ -1,5 +1,6 @@
 ﻿using DemoTestAutomation.Helpers;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +38,11 @@ namespace DemoTestAutomation.Pages
             Assert.IsTrue(headingTextValue == Pages.Payees.payeeHeadingText);
         }
 
-        public static void NavigateToPayeesPage(WebDriver webDriver)
+        public static void NavigateToPayeesPage(Webdriverhelper driverHelper, string baseUrl, WebDriverWait wait)
         {
-            Helpers.Webdriverhelper.NavigateToPage(webDriver,
-                Helpers.Webdriverhelper.GetBaseUrl());
-            ReuseAppActions.ClickOnMainMenu(webDriver);
-            ReuseAppActions.ClickOnMainMenuPayees(webDriver);
+            driverHelper.NavigateToPage(driverHelper.driver, baseUrl);
+            ReuseAppActions.ClickOnMainMenu(driverHelper.driver, wait);
+            ReuseAppActions.ClickOnMainMenuPayees(driverHelper.driver, wait);
         }
 
         public static void ClickOnPayeeAddBtn(WebDriver webDriver)
@@ -97,13 +97,13 @@ namespace DemoTestAutomation.Pages
 
         public static void CheckForNewlyAddedPayeeInTheList(WebDriver webDriver)
         {
-            bool added = webDriver.FindElement(By.XPath(check_Newly_Added_Payee_InList)).Displayed;
-            Assert.IsTrue(added);            
+            bool isPayeeadded = webDriver.FindElement(By.XPath(check_Newly_Added_Payee_InList)).Displayed;
+            Assert.IsTrue(isPayeeadded);            
         }
 
-        public static void isValidationErrorDisplayedOnPayeeMdl(WebDriver webDriver)
+        public static void isValidationErrorDisplayedOnPayeeMdl(WebDriver webDriver, WebDriverWait wait)
         {
-            string msg = Webdriverhelper.RetryDynamicElementsWithMsg(webDriver, add_Payee_Model_ErrorMsg);
+            string msg = ReuseAppActions.RetryDynamicElementsWithMsg(webDriver, add_Payee_Model_ErrorMsg, wait);
             Assert.IsTrue(msg.Contains("A problem was found. Please correct the field highlighted below."));
             bool isDisplayed = webDriver.FindElement(By.XPath(add_Payee_Model_ErrorMsg)).Displayed;
             Assert.IsTrue(isDisplayed);
@@ -168,7 +168,6 @@ namespace DemoTestAutomation.Pages
             var lastElementAfterSort = elementsAfterSorting.Last().Text;
             //first element before sorting now became last element, hence sorting working
             Assert.IsTrue(firstElementBeforeSort.Contains(lastElementAfterSort));          
-            
         }
     }
 }

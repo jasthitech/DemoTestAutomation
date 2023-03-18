@@ -1,10 +1,9 @@
 ﻿Feature: PaymentsFunctionality
 
-A short summary of the feature
+These scenarios validate Payments functionality
 
-@tag1
+@Smoke @Regression @Payments
 Scenario Outline: Verify funds transfer functionality
-
 Given a user is on the Payments page
 And the Everyday account has a balance greater than <transfer_amount>
 And the Bills account has a balance less than <transfer_amount>
