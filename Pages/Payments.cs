@@ -105,8 +105,10 @@ namespace DemoTestAutomation.Pages
             try
             {
                 ReuseAppActions.FindByCssAndClickByJavaScript(webDriver, toBillsAccByCss, wait);
+                // Wait for the web element to be clickable
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(billsChoosedintoToAcc)));
                 bool isBillsAccSelected = webDriver.FindElement(By.XPath(billsChoosedintoToAcc)).Displayed;
-                Assert.IsTrue(isBillsAccSelected);
+                Assert.IsTrue(isBillsAccSelected, "Bills account not selected as it is not available in the list");
             }
             catch(Exception ex)
             {
@@ -114,6 +116,15 @@ namespace DemoTestAutomation.Pages
                     IWebElement css_element = webDriver.FindElement(By.CssSelector(toBillsAccByCss));
                     IJavaScriptExecutor executor = (IJavaScriptExecutor)webDriver;
                     executor.ExecuteScript("arguments[0].click();", css_element);
+
+                // Wait for the web element to be visible before clicking on it
+                wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(billsChoosedintoToAcc)));
+
+                // Wait for the web element to be clickable
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(billsChoosedintoToAcc)));
+
+                bool isBillsAccSelected = webDriver.FindElement(By.XPath(billsChoosedintoToAcc)).Displayed;
+                Assert.IsTrue(isBillsAccSelected, "Bills account not selected as it is not available in the list");
             }            
         }
 
