@@ -7,13 +7,35 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  testDllPath: '$(System.DefaultWorkingDirectory)/DemoTestAutomation/bin/$(buildConfiguration)/DemoTestAutomation.dll'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '5.11.0'
+  displayName: 'Install NuGet'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(System.DefaultWorkingDirectory)/DemoTestAutomation.csproj'
+  displayName: 'Restore NuGet packages'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(System.DefaultWorkingDirectory)/DemoTestAutomation.csproj'
+    platform: 'Any CPU'
+    configuration: '$(buildConfiguration)'
+  displayName: 'Build project'
+
+- task: VSTest@2
+  inputs:
+    testAssemblyVer2: |
+      $(testDllPath)
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    platform: 'Any CPU'
+    configuration: '$(buildConfiguration)'
+  displayName: 'Run tests'
