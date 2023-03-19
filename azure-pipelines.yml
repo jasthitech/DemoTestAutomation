@@ -12,7 +12,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  testDllPath: '$(System.DefaultWorkingDirectory)/DemoTestAutomation/bin/$(buildConfiguration)/DemoTestAutomation.dll'
+  testDllPath: '$(System.DefaultWorkingDirectory)\bin\Any CPU\Release\net6.0\DemoTestAutomation.dll'
 
 steps:
 - task: NuGetToolInstaller@1
